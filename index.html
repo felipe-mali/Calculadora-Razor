@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadoras Industriais</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="tema-claro">
+
+  <!-- CABEÇALHO -->
+  <header class="cabecalho">
+    <div class="cabecalho-inner">
+      <div class="logo-area">
+        <img src="logo.jpg" alt="Razor Industrial" class="logo-img">
+        <span class="logo-texto">Razor Industrial</span>
+      </div>
+      <button class="btn-tema" id="btnTema" onclick="alternarTema()" title="Alternar tema claro/escuro">
+        <span id="iconeTema">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MENU DE NAVEGAÇÃO -->
+
+  <nav class="menu-nav">
+    <button class="btn-menu ativo" id="menu-producao" onclick="trocarTela('producao')">
+      <span class="menu-icon">📋</span>
+      <span class="menu-label">Prazo de Produção</span>
+    </button>
+    <button class="btn-menu" id="menu-conversor" onclick="trocarTela('conversor')">
+      <span class="menu-icon">📐</span>
+      <span class="menu-label">Conversor de Medidas</span>
+    </button>
+    <button class="btn-menu" onclick="location.href='tela3-mureta.html'">
+      <span class="menu-icon">🧱</span>
+      <span class="menu-label">Materiais para Mureta</span>
+    </button>
+    <button class="btn-menu" onclick="location.href='tela4-malha.html'">
+      <span class="menu-icon">⚖️</span>
+      <span class="menu-label">Peso da Malha/Bobina</span>
+    </button>
+  </nav>
+
+  <!-- ÁREA PRINCIPAL -->
+  <main class="main-content">
+
+    <!-- ===========================
+         TELA 1 - PRAZO DE PRODUÇÃO
+         =========================== -->
+    <section id="tela-producao" class="tela ativa">
+      <div class="tela-titulo">
+        <h2>Calculadora — Prazo de Produção</h2>
+        <p class="subtitulo">Estime horas, dias de fabricação e previsão de entrega.</p>
+      </div>
+
+      <div class="card-grid">
+        <!-- Entradas -->
+        <div class="card">
+          <h3 class="card-titulo">Dados de Entrada</h3>
+
+          <div class="campo-grupo">
+            <label for="prod-malha">Malha</label>
+            <select id="prod-malha" onchange="calcularProducao()">
+              <option value="2.5">2,5</option>
+              <option value="5">5</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+
+          <div class="campo-grupo">
+            <label for="prod-comprimento">Comprimento (metros)</label>
+            <input type="text" id="prod-comprimento" class="obrigatorio" placeholder="Ex: 2,5" oninput="calcularProducao()" />
+          </div>
+
+          <div class="campo-grupo">
+            <label for="prod-altura">Altura (metros)</label>
+            <input type="text" id="prod-altura" class="obrigatorio" placeholder="Ex: 1,7" oninput="calcularProducao()" />
+          </div>
+
+          <div class="campo-grupo">
+            <label for="prod-quantidade">Quantidade</label>
+            <input type="text" id="prod-quantidade" class="obrigatorio" placeholder="Ex: 10" oninput="calcularProducao()" />
+          </div>
+
+          <div class="campo-grupo">
+            <label for="prod-dias-fila">Dias em fila de produção</label>
+            <input type="text" id="prod-dias-fila" placeholder="Ex: 3" oninput="calcularProducao()" />
+          </div>
+
+          <div class="botoes-acao">
+            <button class="btn-limpar" onclick="limparProducao()">🗑 Novo</button>
+            <button class="btn-imprimir" onclick="imprimirOrcamento('producao')">🖨 Imprimir</button>
+          </div>
+        </div>
+
+        <!-- Resultados -->
+        <div class="card">
+          <h3 class="card-titulo">Resultados</h3>
+
+          <div id="erro-producao" class="msg-erro hidden"></div>
+
+          <div class="resultado-grid">
+            <div class="resultado-item">
+              <span class="resultado-label">Metro Linear Total</span>
+              <span class="resultado-valor" id="res-metro-linear">—</span>
+              <span class="resultado-unidade">m</span>
+            </div>
+            <div class="resultado-item">
+              <span class="resultado-label">M² Total</span>
+              <span class="resultado-valor" id="res-m2-total">—</span>
+              <span class="resultado-unidade">m²</span>
+            </div>
+            <div class="resultado-item destaque">
+              <span class="resultado-label">Horas de Fabricação</span>
+              <span class="resultado-valor" id="res-horas-fab">—</span>
+              <span class="resultado-unidade">h</span>
+            </div>
+            <div class="resultado-item destaque">
+              <span class="resultado-label">Dias de Fabricação</span>
+              <span class="resultado-valor" id="res-dias-fab">—</span>
+              <span class="resultado-unidade">dias</span>
+            </div>
+            <div class="resultado-item principal">
+              <span class="resultado-label">Previsão de Entrega</span>
+              <span class="resultado-valor" id="res-previsao">—</span>
+              <span class="resultado-unidade">dias úteis</span>
+            </div>
+          </div>
+
+          <div class="aviso-box">
+            <strong>⚠ Atenção</strong>
+            <p>* Estes prazos devem ser acrescidos aos demais pedidos já em fila de produção.</p>
+            <p>** Esta calculadora funciona apenas com medidas em metros.</p>
+          </div>
+        </div>
+
+        <!-- Configurações de Produtividade (protegidas por senha) -->
+        <div class="card card-full">
+          <div class="admin-cabecalho">
+            <div>
+              <h3 class="card-titulo" style="margin-bottom:4px;">⚙ Configurações de Produtividade</h3>
+              <p class="card-desc" style="margin-bottom:0">
+                Produtividade cadastrada por malha em m²/hora.
+                <strong>Horas = M² Total ÷ Produção (m²/h).</strong>
+              </p>
+            </div>
+            <div class="admin-botoes">
+              <button class="btn-desbloquear" id="btn-desbloquear" onclick="desbloquearConfiguracoes()">
+                🔒 Desbloquear Configurações
+              </button>
+              <button class="btn-bloquear hidden" id="btn-bloquear" onclick="bloquearConfiguracoes()">
+                🔓 Bloquear
+              </button>
+            </div>
+          </div>
+
+          <!-- Área administrativa — oculta por padrão, exibida após senha correta -->
+          <div id="area-admin" class="hidden">
+            <div class="tabela-fatores-wrap" style="margin-top:16px;">
+              <table class="tabela-fatores">
+                <thead>
+                  <tr>
+                    <th>Malha</th>
+                    <th>Produção (m²/hora)</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="corpo-tabela-producao">
+                  <!-- Gerado via JS -->
+                </tbody>
+              </table>
+              <div class="admin-actions">
+                <button class="btn-add-fator" onclick="adicionarMalhaProducao()">+ Adicionar malha</button>
+                <button class="btn-salvar" id="btn-salvar-producao" onclick="salvarTabelaProducao()" disabled>
+                  💾 Salvar
+                </button>
+                <span id="feedback-salvar-producao" class="feedback-msg hidden"></span>
+                <div class="admin-export">
+                  <button class="btn-export" onclick="exportarProducaoJSON()">📤 JSON</button>
+                  <button class="btn-export" onclick="exportarProducaoCSV()">📤 CSV</button>
+                  <button class="btn-export" onclick="exportarProducaoTXT()">📤 TXT</button>
+                  <button class="btn-export" onclick="importarProducaoJSON()">📥 Importar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         TELA 2 - CONVERSOR CM ↔ METRO
+         =========================== -->
+    <section id="tela-conversor" class="tela">
+      <div class="tela-titulo">
+        <h2>Conversor de Medidas</h2>
+        <p class="subtitulo">Converta entre unidades de comprimento em tempo real.</p>
+      </div>
+
+      <div class="card">
+        <div class="conv-selector">
+          <label for="conv-unidade">Unidade de origem</label>
+          <select id="conv-unidade" onchange="converterMedidas()">
+            <option value="mm">Milímetro (mm)</option>
+            <option value="cm">Centímetro (cm)</option>
+            <option value="m" selected>Metro (m)</option>
+            <option value="km">Quilômetro (km)</option>
+          </select>
+        </div>
+
+        <div class="campo-grupo">
+          <label for="conv-valor">Valor</label>
+          <input type="text" id="conv-valor" placeholder="Ex: 1,5" oninput="converterMedidas()" />
+        </div>
+
+        <div class="conv-resultados">
+          <div class="conv-resultado-item">
+            <span class="conv-res-unidade">Milímetro</span>
+            <span class="conv-res-valor" id="res-mm">—</span>
+            <span class="conv-res-sigla">mm</span>
+          </div>
+          <div class="conv-resultado-item">
+            <span class="conv-res-unidade">Centímetro</span>
+            <span class="conv-res-valor" id="res-cm">—</span>
+            <span class="conv-res-sigla">cm</span>
+          </div>
+          <div class="conv-resultado-item">
+            <span class="conv-res-unidade">Metro</span>
+            <span class="conv-res-valor" id="res-m">—</span>
+            <span class="conv-res-sigla">m</span>
+          </div>
+          <div class="conv-resultado-item">
+            <span class="conv-res-unidade">Quilômetro</span>
+            <span class="conv-res-valor" id="res-km">—</span>
+            <span class="conv-res-sigla">km</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape">
+    <span>Calculadoras Industriais — Razor Industrial | Todos os dados salvos localmente no navegador.</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

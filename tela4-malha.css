@@ -1,0 +1,259 @@
+/* ========================================
+   ESTILOS — TELA 4: PESO DA MALHA/BOBINA
+   ======================================== */
+
+/* RESULTADOS */
+.resultado-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.resultado-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background: var(--fundo);
+  border-radius: 12px;
+  border-left: 4px solid var(--cinza-borda);
+  gap: 12px;
+  transition: all var(--transicao);
+}
+
+.resultado-item.destaque {
+  border-left-color: var(--amarelo);
+  background: var(--amarelo-suave);
+}
+
+.resultado-item.principal {
+  border-left-color: var(--amarelo-escuro);
+  background: var(--amarelo);
+  color: #222;
+}
+
+.resultado-label {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: inherit;
+}
+
+.resultado-valor {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.resultado-unidade {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  min-width: 40px;
+  text-align: right;
+}
+
+.resultado-item.principal .resultado-unidade { color: #444; }
+
+/* TABELA DE PESOS */
+.card-sub {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--cinza-borda);
+}
+
+.card-sub-titulo {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--texto-secundario);
+  margin-bottom: 12px;
+}
+
+.badge-edit {
+  font-size: 11px;
+  background: var(--amarelo);
+  color: #333;
+  padding: 2px 10px;
+  border-radius: 30px;
+  font-weight: 600;
+}
+
+.tabela-pesos-wrap {
+  overflow-x: auto;
+}
+
+.tabela-pesos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabela-pesos th {
+  background: linear-gradient(135deg, var(--amarelo-escuro), var(--amarelo));
+  color: #fff;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+body.tema-escuro .tabela-pesos th {
+  background: linear-gradient(135deg, #555, #444);
+}
+
+.tabela-pesos td {
+  padding: 12px 18px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+body.tema-escuro .tabela-pesos td {
+  border-bottom-color: #333;
+}
+
+.tabela-pesos tr:hover td {
+  background: var(--amarelo-suave);
+}
+
+.tabela-pesos input[type="text"],
+.tabela-pesos input[type="number"] {
+  width: 100px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--cinza-borda);
+  border-radius: 8px;
+  background: var(--fundo);
+  color: var(--texto-principal);
+  font-size: 14px;
+  transition: border-color var(--transicao);
+}
+
+.tabela-pesos input:focus {
+  border-color: var(--amarelo);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,193,7,0.15);
+}
+
+/* BOTÕES DE AÇÃO ADMIN */
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-salvar {
+  padding: 9px 20px;
+  background: var(--amarelo);
+  color: #222;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transicao), transform var(--transicao);
+  white-space: nowrap;
+}
+
+.btn-salvar:hover:not(:disabled) {
+  background: var(--amarelo-escuro);
+  transform: translateY(-1px);
+}
+
+.btn-salvar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-desbloquear {
+  padding: 10px 20px;
+  background: var(--amarelo);
+  color: #222;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicao);
+  white-space: nowrap;
+}
+
+.btn-desbloquear:hover {
+  background: var(--amarelo-escuro);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255,193,7,0.35);
+}
+
+body.tema-escuro .btn-desbloquear {
+  background: var(--amarelo);
+  color: #222;
+}
+
+body.tema-escuro .btn-desbloquear:hover {
+  background: var(--amarelo-escuro);
+}
+
+.btn-bloquear {
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--cinza-escuro);
+  border: 1.5px solid var(--cinza-borda);
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transicao);
+  white-space: nowrap;
+}
+
+.btn-bloquear:hover {
+  background: var(--cinza-borda);
+  transform: translateY(-1px);
+}
+
+.feedback-msg {
+  font-size: 13px;
+  font-weight: 600;
+  color: #27ae60;
+  animation: fadeIn 0.2s ease;
+}
+
+.admin-export {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.btn-export {
+  padding: 7px 14px;
+  background: var(--cinza-borda);
+  color: var(--cinza-escuro);
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transicao);
+  white-space: nowrap;
+}
+
+.btn-export:hover {
+  background: #ccc;
+}
+
+/* VALIDAÇÃO */
+.obrigatorio:invalid:not(:placeholder-shown),
+.obrigatorio.obrigatorio-touched:invalid {
+  border-color: #e74c3c;
+}
+
+.obrigatorio:valid:not(:placeholder-shown) {
+  border-color: #27ae60;
+}

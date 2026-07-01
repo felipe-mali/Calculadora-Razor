@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materiais para Mureta — Calculadoras Razor</title>
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="tela3-mureta.css">
+</head>
+<body class="tema-claro">
+
+  <header class="cabecalho">
+    <div class="cabecalho-inner">
+      <div class="logo-area">
+        <a href="index.html" class="btn-voltar">← Voltar</a>
+        <img src="logo.jpg" alt="Razor Industrial" class="logo-img">
+        <span class="logo-texto">Razor Industrial</span>
+      </div>
+      <button class="btn-tema" id="btnTema" onclick="alternarTema()" title="Alternar tema">
+        <span id="iconeTema">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <div class="tela-titulo">
+      <h2>Calculadora — Materiais para Mureta</h2>
+      <p class="subtitulo">Calcule os materiais necessários para construção de mureta.</p>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3 class="card-titulo">Dados de Entrada</h3>
+
+        <div class="campo-grupo">
+          <label for="mur-metros">Metros Lineares</label>
+          <input type="text" id="mur-metros" class="obrigatorio" placeholder="Ex: 100" oninput="calcularMureta()" />
+        </div>
+
+        <div class="campo-grupo">
+          <label for="mur-fiada-bloco">Fiada Bloco de Cimento 15</label>
+          <input type="number" id="mur-fiada-bloco" placeholder="Ex: 1" oninput="calcularMureta()" value="1" min="0" step="1" />
+        </div>
+
+        <div class="campo-grupo">
+          <label for="mur-fiada-canaleta">Fiada Canaleta Cimento 15</label>
+          <input type="number" id="mur-fiada-canaleta" placeholder="Ex: 1" oninput="calcularMureta()" value="1" min="0" step="1" />
+        </div>
+
+        <div class="campo-grupo">
+          <label for="mur-altura">Altura da Mureta (cm) <small>(informativo)</small></label>
+          <input type="number" id="mur-altura" placeholder="Ex: 40" oninput="calcularMureta()" min="0" step="1" />
+        </div>
+
+        <div class="botoes-acao">
+          <button class="btn-limpar" onclick="limparMureta()">🗑 Novo</button>
+          <button class="btn-imprimir" onclick="window.print()">🖨 Imprimir</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-titulo">Materiais Necessários</h3>
+
+        <div id="erro-mureta" class="msg-erro hidden"></div>
+
+        <div class="tabela-materiais-wrap">
+          <table class="tabela-materiais">
+            <thead>
+              <tr>
+                <th>Material</th>
+                <th>Quantidade</th>
+                <th>Unidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bloco</td>
+                <td id="res-bloco">—</td>
+                <td class="unidade-col">UNIDADES</td>
+              </tr>
+              <tr>
+                <td>Meio Bloco de Concreto</td>
+                <td id="res-meio-bloco">—</td>
+                <td class="unidade-col">UNIDADES</td>
+              </tr>
+              <tr>
+                <td>Canaleta Estrutural de Concreto</td>
+                <td id="res-canaleta">—</td>
+                <td class="unidade-col">UNIDADES</td>
+              </tr>
+              <tr>
+                <td>Meia Canaleta Estrutural</td>
+                <td id="res-meia-canaleta">—</td>
+                <td class="unidade-col">UNIDADES</td>
+              </tr>
+              <tr class="linha-sep">
+                <td>Saco de Cimento 50kg</td>
+                <td id="res-cimento">—</td>
+                <td class="unidade-col">SACOS</td>
+              </tr>
+              <tr>
+                <td>Metro de Areia</td>
+                <td id="res-areia">—</td>
+                <td class="unidade-col">m³</td>
+              </tr>
+              <tr>
+                <td>Metro de Pedrisco</td>
+                <td id="res-pedrisco">—</td>
+                <td class="unidade-col">m³</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="coeficientes-box">
+          <h4>Coeficientes utilizados</h4>
+          <div class="coef-grid">
+            <span>Bloco: 2,5 × fiadas</span>
+            <span>Canaleta: 2,5 × fiadas</span>
+            <span>Cimento: 0,13/m</span>
+            <span>Areia: 0,03/m</span>
+            <span>Pedrisco: 0,015/m</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <span>Calculadoras Industriais — Razor Industrial | Todos os dados salvos localmente no navegador.</span>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script src="tela3-mureta.js"></script>
+</body>
+</html>

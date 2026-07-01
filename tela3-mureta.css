@@ -1,0 +1,108 @@
+/* ========================================
+   ESTILOS — TELA 3: MATERIAIS PARA MURETA
+   ======================================== */
+
+/* TABELA DE MATERIAIS */
+.tabela-materiais-wrap {
+  overflow-x: auto;
+}
+
+.tabela-materiais {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabela-materiais th {
+  background: linear-gradient(135deg, var(--amarelo-escuro), var(--amarelo));
+  color: #fff;
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+body.tema-escuro .tabela-materiais th {
+  background: linear-gradient(135deg, #555, #444);
+}
+
+.tabela-materiais td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+body.tema-escuro .tabela-materiais td {
+  border-bottom-color: #333;
+}
+
+.tabela-materiais tr:hover td {
+  background: var(--amarelo-suave);
+}
+
+.tabela-materiais td:nth-child(2) {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--amarelo-escuro);
+}
+
+body.tema-escuro .tabela-materiais td:nth-child(2) {
+  color: var(--amarelo);
+}
+
+.unidade-col {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  font-weight: 600;
+}
+
+.linha-sep td {
+  border-top: 2px solid var(--amarelo);
+}
+
+/* COEFICIENTES */
+.coeficientes-box {
+  margin-top: 20px;
+  padding: 14px 18px;
+  background: var(--fundo);
+  border-radius: 12px;
+  border: 1px solid var(--cinza-borda);
+}
+
+.coeficientes-box h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--texto-secundario);
+  margin-bottom: 10px;
+}
+
+.coef-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.coef-grid span {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  background: var(--cinza-borda);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+body.tema-escuro .coef-grid span {
+  background: #333;
+  color: var(--texto-secundario);
+}
+
+/* VALIDAÇÃO */
+.obrigatorio:invalid:not(:placeholder-shown),
+.obrigatorio.obrigatorio-touched:invalid {
+  border-color: #e74c3c;
+}
+
+.obrigatorio:valid:not(:placeholder-shown) {
+  border-color: #27ae60;
+}

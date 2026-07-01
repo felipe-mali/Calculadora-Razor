@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peso da Malha/Bobina — Calculadoras Razor</title>
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="tela4-malha.css">
+</head>
+<body class="tema-claro">
+
+  <header class="cabecalho">
+    <div class="cabecalho-inner">
+      <div class="logo-area">
+        <a href="index.html" class="btn-voltar">← Voltar</a>
+        <img src="logo.jpg" alt="Razor Industrial" class="logo-img">
+        <span class="logo-texto">Razor Industrial</span>
+      </div>
+      <button class="btn-tema" id="btnTema" onclick="alternarTema()" title="Alternar tema">
+        <span id="iconeTema">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <div class="tela-titulo">
+      <h2>Calculadora — Peso da Malha / Bobina</h2>
+      <p class="subtitulo">Calcule o peso total de bobinas de malha de arame.</p>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card">
+        <h3 class="card-titulo">Dados de Entrada</h3>
+
+        <div class="campo-grupo">
+          <label for="malha-tipo">Malha</label>
+          <select id="malha-tipo" onchange="calcularMalha()">
+            <option value="">— Selecione —</option>
+            <option value="malha2_5">Malha 2,5</option>
+            <option value="malha5">Malha 5</option>
+            <option value="malha8">Malha 8</option>
+            <option value="malha10">Malha 10</option>
+          </select>
+        </div>
+
+        <div class="campo-grupo">
+          <label for="malha-bwg">Arame (BWG)</label>
+          <select id="malha-bwg" onchange="calcularMalha()">
+            <option value="">— Selecione —</option>
+          </select>
+        </div>
+
+        <div class="campo-grupo">
+          <label for="malha-metros">Metros Lineares</label>
+          <input type="text" id="malha-metros" class="obrigatorio" placeholder="Ex: 50" oninput="calcularMalha()" />
+        </div>
+
+        <div class="campo-grupo">
+          <label for="malha-altura">Altura (metros)</label>
+          <input type="text" id="malha-altura" placeholder="Ex: 1,2" oninput="calcularMalha()" />
+        </div>
+
+        <div class="campo-grupo">
+          <label for="malha-bobinas">Quantidade de Bobinas</label>
+          <input type="text" id="malha-bobinas" placeholder="Ex: 5" oninput="calcularMalha()" />
+        </div>
+
+        <div class="botoes-acao">
+          <button class="btn-limpar" onclick="limparMalha()">🗑 Novo</button>
+          <button class="btn-imprimir" onclick="window.print()">🖨 Imprimir</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-titulo">Resultados</h3>
+
+        <div id="erro-malha" class="msg-erro hidden"></div>
+
+        <div class="resultado-grid">
+          <div class="resultado-item destaque">
+            <span class="resultado-label">Peso por Bobina</span>
+            <span class="resultado-valor" id="res-peso-bobina">—</span>
+            <span class="resultado-unidade">KG</span>
+          </div>
+          <div class="resultado-item principal">
+            <span class="resultado-label">Peso Total</span>
+            <span class="resultado-valor" id="res-peso-total">—</span>
+            <span class="resultado-unidade">KG</span>
+          </div>
+        </div>
+
+        <!-- Configurações de Pesos (protegidas por senha) -->
+        <div class="card-sub">
+          <div class="admin-cabecalho">
+            <div>
+              <h4 class="card-sub-titulo">Tabela de Pesos (kg/m) <span class="badge-edit" id="badge-pesos">Bloqueado</span></h4>
+              <p class="card-desc" style="margin-bottom:0">
+                Pesos por metro para cada combinação malha/BWG.
+                <strong>Peso = pesoPorMetro × metros × altura.</strong>
+              </p>
+            </div>
+            <div class="admin-botoes">
+              <button class="btn-desbloquear" id="btn-desbloquear-pesos" onclick="desbloquearPesos()">
+                🔒 Desbloquear
+              </button>
+              <button class="btn-bloquear hidden" id="btn-bloquear-pesos" onclick="bloquearPesos()">
+                🔓 Bloquear
+              </button>
+            </div>
+          </div>
+
+          <!-- Área admin — oculta por padrão -->
+          <div id="area-admin-pesos" class="hidden">
+            <div class="tabela-pesos-wrap" style="margin-top:16px;">
+              <table class="tabela-pesos" id="tabela-pesos">
+                <thead>
+                  <tr>
+                    <th>Malha</th>
+                    <th>BWG</th>
+                    <th>Peso (kg/m)</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="corpo-tabela-pesos">
+                </tbody>
+              </table>
+              <div class="admin-actions">
+                <button class="btn-salvar" id="btn-salvar-pesos" onclick="salvarTabelaPesos()" disabled>
+                  💾 Salvar
+                </button>
+                <span id="feedback-salvar" class="feedback-msg hidden"></span>
+                <div class="admin-export">
+                  <button class="btn-export" onclick="exportarPesosJSON()">📤 Exportar JSON</button>
+                  <button class="btn-export" onclick="importarPesosJSON()">📥 Importar JSON</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <span>Calculadoras Industriais — Razor Industrial | Todos os dados salvos localmente no navegador.</span>
+  </footer>
+
+  <script src="shared.js"></script>
+  <script src="tela4-malha.js"></script>
+</body>
+</html>
